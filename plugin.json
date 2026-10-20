@@ -1,0 +1,27 @@
+{
+  "id": "com.custom.bundleworkspace",
+  "name": "Bundle Workspace",
+  "main": "main.js",
+  "version": "1.5.1",
+  "icon": "icon.png",
+  "readme": "readme.md",
+  "minVersionCode": 958,
+  "description": "Bundle project files into one XML or Markdown document for AI/LLM tools.",
+  "author": {
+    "name": "Anonymous"
+  },
+  "keywords": [
+    "bundle",
+    "workspace",
+    "AI",
+    "LLM",
+    "context",
+    "code",
+    "project",
+    "files",
+    "Repomix",
+    "XML",
+    "Markdown",
+    "token optimization"
+  ]
+}
