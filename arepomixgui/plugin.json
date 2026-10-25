@@ -1,0 +1,27 @@
+{
+  "id": "com.custom.arepomixgui",
+  "name": "ARepomixGUI",
+  "main": "main.js",
+  "license": "MIT",
+  "version": "1.1.0",
+  "icon": "icon.png",
+  "readme": "readme.md",
+  "minVersionCode": 958,
+  "description": "A graphical wrapper for the Repomix command line tool, run in Acode's terminal.",
+  "author": {
+    "name": "extiostorm"
+  },
+  "keywords": [
+    "Repomix",
+    "GUI",
+    "AI",
+    "LLM",
+    "context",
+    "bundle",
+    "pack",
+    "terminal",
+    "Alpine",
+    "project",
+    "files"
+  ]
+}
