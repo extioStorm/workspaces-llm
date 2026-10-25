@@ -94,7 +94,7 @@ Android doesn't let apps open the very top of storage, so the highest folder Aco
 | Install or update Repomix | Asks first, then installs Node.js, npm and the latest Repomix |
 | Repomix command | `repomix` or `npx repomix` |
 | Output format | `auto` (default), `xml`, `markdown`, `plain` or `json`. With `auto` the plugin passes no `--style`, so Repomix uses `output.style` from your config (xml if none) |
-| Output file name | `(from config)` by default: uses `output.filePath` from `repomix.config.json`, or `repomix-output` with the right ending. Type a name to override it. The ending follows Output format; with `auto`, type the full name including the ending |
+| Output file name | `(from config)` by default: uses `output.filePath` from `repomix.config.json`, or `repomix-output` with the right ending. Type the name only (any `.xml`, `.md`, `.txt` or `.json` you add is removed); the ending is added from Output format. With `auto`, type the full name including the ending |
 | Command options (this run) | Checkbox screen for Repomix's flags, with a live command preview |
 | Extra flags | Added to the command as-is, for flags not covered by Command options |
 | Open output when finished | Opens the result in a tab with `acode` |

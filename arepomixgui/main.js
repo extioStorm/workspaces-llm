@@ -113,7 +113,7 @@
 
   const appSettings = acode.require("settings");
 
-  const stripExt = (v) => String(v || "").trim().replace(/\.(xml|md|txt|json)$/i, "");
+  const stripExt = (v) => String(v || "").trim().replace(/\.(xml|md|markdown|txt|text|json)$/i, "");
   const FORMAT_CHOICES = ["auto", ...FORMATS];
 
   function cfg() {
@@ -156,7 +156,7 @@
     ["installRepomix", "Install or update Repomix", "Asks first, then installs Node.js, npm and the latest Repomix in Acode's Alpine terminal. Needs an internet connection.", "action"],
     ["repomixCommand", "Repomix command", "repomix, or npx repomix.", "text"],
     ["outputFormat", "Output format", "auto, xml, markdown, plain or json. auto passes no --style, so Repomix uses output.style from your config (xml if there is none).", "select", FORMAT_CHOICES],
-    ["outputName", "Output file name", "(from config) uses output.filePath from repomix.config.json, or repomix-output if there is none. Type a name to override it. The ending follows Output format; with auto, type the full name including the ending.", "text"],
+    ["outputName", "Output file name", "(from config) uses output.filePath from repomix.config.json, or repomix-output if there is none. Type a name to override it. Type the name only: the ending (.xml, .md, .txt or .json) is added from Output format. With auto, type the full name including the ending.", "text"],
     ["commandOptions", "Command options (this run)", "Checkboxes for Repomix's command line flags: the common ones on top, the rest under Advanced, with a live preview of the command.", "action"],
     ["repomixFlags", "Extra flags", "Anything not covered by Command options, added to the command as-is.", "text"],
     ["openOutput", "Open output when finished", "Opens the result in an Acode tab with the acode command.", "bool"],
@@ -185,7 +185,7 @@
       else if (type === "text" || type === "number") {
         if (key === "outputName") {
           item.value = !c.outputName ? "(from config)"
-            : FORMATS.includes(c.outputFormat) ? stripExt(c.outputName) + EXT[c.outputFormat] : c.outputName;
+            : FORMATS.includes(c.outputFormat) ? stripExt(c.outputName) : c.outputName;
         } else {
           item.value = type === "text" && !c[key] ? "(none)" : c[key];
         }
@@ -214,8 +214,9 @@
         else if (type === "number") c2[key] = Math.min(num(value, 0, 0), 10);
         else if (key === "outputName") {
           const v = String(value || "").trim();
-          c2[key] = v === "(from config)" || v === "(none)" ? ""
-            : FORMATS.includes(c2.outputFormat) ? stripExt(v) : v;
+          const named = FORMATS.includes(c2.outputFormat);
+          c2[key] = v === "(from config)" || v === "(none)" ? "" : named ? stripExt(v) : v;
+          if (named && c2[key] && c2[key] !== v) toast("Saved as " + c2[key] + EXT[c2.outputFormat] + " (the ending follows Output format)");
         }
         else if (key === "repomixCommand") c2[key] = String(value || "").trim() || DEFAULTS[key];
         else if (key === "terminalBase") c2[key] = String(value || "").trim().replace(/\/+$/, "") || DEFAULTS[key];
