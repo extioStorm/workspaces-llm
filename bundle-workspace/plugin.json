@@ -2,14 +2,13 @@
   "id": "com.custom.bundleworkspace",
   "name": "Bundle Workspace",
   "main": "main.js",
-  "license": "MIT",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "icon": "icon.png",
   "readme": "readme.md",
   "minVersionCode": 958,
   "description": "Bundle project files into one XML, Markdown or plain-text document for AI/LLM tools.",
   "author": {
-    "name": "extiostorm"
+    "name": "Anonymous"
   },
   "keywords": [
     "bundle",

@@ -521,6 +521,12 @@
   // ---------- File picker (checklist) ----------
   // Resolves to { count, exclusions } (unchecked items as { path, dir }),
   // "settings" if the Settings button was tapped, or null if cancelled.
+  // Android's back button closes a custom screen the same way its Cancel button does.
+  function backCancels(id, cancel) {
+    try { acode.require("actionStack").push({ id, action: cancel }); } catch (e) { /* no back handling */ }
+    return () => { try { acode.require("actionStack").remove(id); } catch (e) { /* ignore */ } };
+  }
+
   function pickFiles(files, previous) {
     const items = [...files, ...previous.map((f) => ({ ...f, previous: true }))];
     return new Promise((resolve) => {
@@ -673,10 +679,13 @@
 
       renderNode(rootNode, 0, list);
 
+      let stopBack = () => {};
       const finish = (value) => {
+        stopBack();
         if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
         resolve(value);
       };
+      stopBack = backCancels("arepomixgui-checklist", () => finish(null));
 
       footer.append(
         button("All", () => { items.forEach((f) => selected.add(f.path)); sync(); }),
@@ -1151,10 +1160,13 @@
         }
       }
 
+      let stopBack = () => {};
       const finish = (value) => {
+        stopBack();
         if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
         resolve(value);
       };
+      stopBack = backCancels("arepomixgui-options", () => finish(null));
 
       // The form's values merged into a copy of the config, or null if a
       // number is invalid (quiet = don't show a message).
