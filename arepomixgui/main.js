@@ -218,7 +218,7 @@
           c2[key] = v === "(from config)" || v === "(none)" ? "" : named ? stripExt(v) : v;
           // The settings page shows what was typed; put the corrected name in its place.
           try {
-            const shown = this && this.querySelector && this.querySelector(".value");
+            const shown = this && this.querySelector && this.querySelector(".setting-trailing-value");
             if (shown) shown.textContent = c2[key] || "(from config)";
           } catch (e) { /* display only */ }
           if (named && c2[key] && c2[key] !== v) toast("Saved as " + c2[key] + EXT[c2.outputFormat] + " (the ending follows Output format)");
