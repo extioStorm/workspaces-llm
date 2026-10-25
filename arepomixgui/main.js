@@ -203,7 +203,7 @@
 
     return {
       list,
-      cb: (key, value) => {
+      cb: function (key, value) {
         if (actions[key]) return actions[key]();
         const row = ITEMS.find((i) => i[0] === key);
         if (!row) return;
@@ -216,6 +216,11 @@
           const v = String(value || "").trim();
           const named = FORMATS.includes(c2.outputFormat);
           c2[key] = v === "(from config)" || v === "(none)" ? "" : named ? stripExt(v) : v;
+          // The settings page shows what was typed; put the corrected name in its place.
+          try {
+            const shown = this && this.querySelector && this.querySelector(".value");
+            if (shown) shown.textContent = c2[key] || "(from config)";
+          } catch (e) { /* display only */ }
           if (named && c2[key] && c2[key] !== v) toast("Saved as " + c2[key] + EXT[c2.outputFormat] + " (the ending follows Output format)");
         }
         else if (key === "repomixCommand") c2[key] = String(value || "").trim() || DEFAULTS[key];
@@ -909,8 +914,6 @@
     {
       title: "Output",
       fields: [
-        { path: "output.filePath", type: "text", label: "Output file name",
-          info: "Ignored by this plugin, which uses its own Output file name setting.", def: "repomix-output.xml" },
         { path: "output.fileSummary", type: "bool", label: "File summary", def: true },
         { path: "output.directoryStructure", type: "bool", label: "Directory structure", def: true },
         { path: "output.files", type: "bool", label: "Include file contents", def: true },
